@@ -4,6 +4,7 @@
 # 실 데이터 (크롤링 결과, DB, 벡터스토어) — 절대 커밋 금지
 data/
 rag/corpus/
+logs/
 
 # Python
 __pycache__/
