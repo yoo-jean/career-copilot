@@ -2,6 +2,18 @@
 
 이직 준비 올인원 봇 — 관심 기업/직무 채용공고 크롤링, LLM 기반 요약, RAG 기반 자소서/면접 답변 초안 생성을 Discord 봇으로 제공합니다.
 
+## 스크린샷
+
+> 아래 화면은 데모용 더미 데이터로 재현한 것입니다 (실제 크롤링 데이터의 회사명은 공개하지 않습니다).
+
+| `/jobs` — 최근 채용공고 목록 | `/summarize` — 공고 요약 |
+|---|---|
+| ![jobs command](docs/screenshots/jobs_command.png) | ![summarize command](docs/screenshots/summarize_command.png) |
+
+| `/draft-letter` — 자소서 초안 생성 |
+|---|
+| ![draft-letter command](docs/screenshots/draft_letter_command.png) |
+
 ## 아키텍처
 
 - `crawler/` — 사이트별 채용공고 크롤러
