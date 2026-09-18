@@ -1,0 +1,79 @@
+{
+  "total_count": 633,
+  "data": [
+    {
+      "id": 380594,
+      "reward_total": "100만원",
+      "is_bookmark": false,
+      "company": {
+        "id": 55265,
+        "name": "아타드(ATAD)",
+        "application_response_stats": {
+          "avg_rate": 0.0,
+          "level": "very_low"
+        }
+      },
+      "title_img": {
+        "origin": "https://static.wanted.co.kr/images/company/55265/q65djxzvmvrissvk__1080_790.jpg",
+        "thumb": "https://static.wanted.co.kr/images/company/55265/q65djxzvmvrissvk__400_400.jpg",
+        "video": null
+      },
+      "position": "백엔드 개발자",
+      "category_tag": {
+        "parent_id": 518,
+        "id": 872
+      },
+      "annual_from": 1,
+      "annual_to": 5,
+      "employment_type": "regular",
+      "additional_apply_type": null,
+      "preferred_languages": [
+        "en",
+        "ja",
+        "zh"
+      ],
+      "visa_information": {
+        "preferred_visas": null,
+        "supported_visas": null
+      },
+      "is_outlink": false
+    },
+    {
+      "id": 73386,
+      "reward_total": "100만원",
+      "is_bookmark": false,
+      "company": {
+        "id": 11470,
+        "name": "해빗팩토리",
+        "application_response_stats": {
+          "avg_rate": 0.0,
+          "level": "very_low"
+        }
+      },
+      "title_img": {
+        "origin": "https://static.wanted.co.kr/images/company/11470/3ipzqwhddjcqaqoe__1080_790.png",
+        "thumb": "https://static.wanted.co.kr/images/company/11470/3ipzqwhddjcqaqoe__400_400.png",
+        "video": null
+      },
+      "position": "백엔드 개발자",
+      "category_tag": {
+        "parent_id": 518,
+        "id": 872
+      },
+      "annual_from": 4,
+      "annual_to": 10,
+      "employment_type": "regular",
+      "additional_apply_type": null,
+      "preferred_languages": null,
+      "visa_information": {
+        "preferred_visas": null,
+        "supported_visas": null
+      },
+      "is_outlink": false
+    }
+  ],
+  "links": {
+    "prev": null,
+    "next": "/api/chaos/search/v1/position?query=%EB%B0%B1%EC%97%94%EB%93%9C&country=all&years=-1&sort=job.recommend_order&limit=5&offset=5"
+  }
+}

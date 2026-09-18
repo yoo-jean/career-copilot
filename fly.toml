@@ -1,0 +1,23 @@
+# fly.toml app configuration file generated for career-copilot-bot on 2026-09-18T21:33:29+09:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'career-copilot-bot'
+primary_region = 'nrt'
+
+[build]
+[env]
+  DATA_DIR = '/data'
+  ENV = 'production'
+
+[[mounts]]
+  source = 'career_copilot_data'
+  destination = '/data'
+
+# HTTP 서버가 아니라 Discord 게이트웨이에 상시 연결하는 워커 프로세스라
+# [http_service]는 두지 않는다 (있으면 트래픽 없다고 판단해 머신을 꺼버림).
+
+[[vm]]
+  size = 'shared-cpu-1x'
+  memory = '256mb'

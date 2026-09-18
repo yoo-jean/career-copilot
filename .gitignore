@@ -1,0 +1,22 @@
+# 환경변수 / 시크릿
+.env
+
+# 실 데이터 (크롤링 결과, DB, 벡터스토어) — 절대 커밋 금지
+data/
+rag/corpus/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# OS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
