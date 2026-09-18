@@ -1,5 +1,8 @@
 # Career Copilot
 
+[![Tests](https://github.com/yoo-jean/career-copilot/actions/workflows/tests.yml/badge.svg)](https://github.com/yoo-jean/career-copilot/actions/workflows/tests.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 이직 준비 올인원 봇 — 관심 기업/직무 채용공고 크롤링, LLM 기반 요약, RAG 기반 자소서/면접 답변 초안 생성을 Discord 봇으로 제공합니다.
 
 ## 스크린샷
