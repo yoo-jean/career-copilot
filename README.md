@@ -38,6 +38,28 @@ cp .env.example .env   # API 키 채워넣기
 pytest
 ```
 
+## 포크해서 내 걸로 쓰기
+
+이 저장소는 1인 전용 개인 도구로 설계되어 있습니다 (DB/벡터스토어가 단일 인스턴스라 여러 명이 같은 봇을 공유할 수 없고, RAG 코퍼스는 말 그대로 "내 경력"입니다). 다른 사람이 자기 것으로 쓰려면 본인 계정으로 완전히 새로운 인스턴스를 만들어야 합니다.
+
+1. 저장소 Fork/Clone 후 `python3 -m venv .venv && pip install -r requirements-dev.txt`
+2. `cp .env.example .env` — 본인의 [Anthropic](https://console.anthropic.com), [OpenAI](https://platform.openai.com) API 키 입력
+3. [Discord Developer Portal](https://discord.com/developers/applications)에서 본인 봇 애플리케이션 생성 → 토큰을 `.env`에 입력
+4. `rag/corpus/`에 **본인의** 경력기술서/자소서를 `.md`로 넣기 (파일명 접두사 `career_`/`project_`/`letter_`로 자동 분류됨) → `python -m rag.run_ingest`
+5. `data/watchlist.json`에 본인이 관심있는 검색 키워드 입력 (예시: `fixtures/watchlist.example.json`)
+6. (선택) Fly.io 배포는 위 "배포" 섹션 그대로 따라하되, `fly launch`에서 본인만의 새 앱 이름을 지정
+7. (선택) `./scripts/install_launchd.sh`로 자동화 등록 — 스크립트가 clone한 경로를 자동으로 감지하므로 경로 수정 불필요
+
+## 매일 자동 실행 (선택, macOS)
+
+크롤링 → 요약 → RAG ingest → Fly.io 동기화 → 봇 재시작을 매일 자동으로 돌리고 싶으면:
+
+```bash
+./scripts/install_launchd.sh
+```
+
+launchd(macOS의 cron 대체)에 등록되며, 등록 즉시 1회 실행되고 이후 노트북이 켜져있는 한 24시간마다 반복됩니다 (정확한 시각이 아니라 "켜져있으면 하루에 한 번" 방식 — 정확한 시각에 실행되는 `cron`과 달리 노트북이 잠들어 있어도 다음에 깨어날 때 놓친 실행을 대신 처리합니다). 로그는 `logs/daily_refresh.log`에 쌓입니다.
+
 ## 데이터 정책
 
 `data/`, `rag/corpus/`는 `.gitignore` 처리되어 있으며, 실제 회사명/지원 정보 등 민감 데이터는 절대 커밋하지 않습니다. 포트폴리오 공개 시에는 `fixtures/`의 더미 데이터로 데모합니다.
