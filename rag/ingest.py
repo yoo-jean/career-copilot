@@ -94,3 +94,28 @@ def ingest_file(session: Session, path: Path) -> bool:
 
     logger.info("ingest 완료: %s (%d개 청크)", path.name, len(chunks))
     return True
+
+
+def prune_orphaned_documents(session: Session) -> int:
+    """rag/corpus/에서 삭제된 파일에 대응하는 CareerDocument/청크/임베딩을 정리한다.
+
+    ingest_file은 생성/갱신만 하고 삭제는 하지 않아서, 코퍼스 파일을 지워도
+    DB와 Chroma에 예전 내용이 고아 상태로 남아 자소서/면접답변 생성에
+    섞여 들어갈 수 있었다.
+    """
+    collection = get_collection()
+    removed = 0
+    for document in session.query(CareerDocument).all():
+        if document.file_path and Path(document.file_path).exists():
+            continue
+
+        chunk_ids = [c.chroma_embedding_id for c in document.chunks]
+        if chunk_ids:
+            collection.delete(ids=chunk_ids)
+        for chunk_row in list(document.chunks):
+            session.delete(chunk_row)
+        session.delete(document)
+        removed += 1
+        logger.info("고아 문서 삭제: %s", document.file_path)
+
+    return removed

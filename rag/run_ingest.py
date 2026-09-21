@@ -1,7 +1,7 @@
 import logging
 
 from core.db import init_db, session_scope
-from rag.ingest import CORPUS_DIR, ingest_file
+from rag.ingest import CORPUS_DIR, ingest_file, prune_orphaned_documents
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 logger = logging.getLogger(__name__)
@@ -10,14 +10,9 @@ logger = logging.getLogger(__name__)
 def main() -> None:
     init_db()
 
-    if not CORPUS_DIR.exists():
-        logger.error("%s 디렉토리가 없습니다. 경력 문서를 .md/.txt 파일로 넣어주세요.", CORPUS_DIR)
-        return
-
-    paths = sorted([*CORPUS_DIR.glob("*.md"), *CORPUS_DIR.glob("*.txt")])
+    paths = sorted([*CORPUS_DIR.glob("*.md"), *CORPUS_DIR.glob("*.txt")]) if CORPUS_DIR.exists() else []
     if not paths:
         logger.warning("%s에 ingest할 파일이 없습니다.", CORPUS_DIR)
-        return
 
     updated = 0
     skipped = 0
@@ -33,7 +28,21 @@ def main() -> None:
             errors += 1
             logger.exception("ingest 실패: %s", path)
 
-    logger.info("총 %d개 파일 — 갱신 %d, 변경없음(스킵) %d, 실패 %d", len(paths), updated, skipped, errors)
+    try:
+        with session_scope() as session:
+            pruned = prune_orphaned_documents(session)
+    except Exception:
+        pruned = 0
+        logger.exception("고아 문서 정리 실패")
+
+    logger.info(
+        "총 %d개 파일 — 갱신 %d, 변경없음(스킵) %d, 실패 %d, 정리(삭제) %d",
+        len(paths),
+        updated,
+        skipped,
+        errors,
+        pruned,
+    )
 
 
 if __name__ == "__main__":
